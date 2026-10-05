@@ -1,0 +1,92 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: #f7f5f0;
+  color: #0a1628;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Visible, consistent keyboard focus everywhere */
+:focus-visible {
+  outline: 3px solid #4ecdc4;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.on-light :focus-visible {
+  outline-color: #1b6f6a;
+}
+
+/* Fade-in on scroll. Only applies once JS has marked <html class="js">, so content
+   is always visible without JavaScript. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 700ms ease,
+    transform 700ms ease;
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Leave room for the sticky mobile bar when jumping to #signup */
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Slow "breathing" rings behind the hero. Decorative only. */
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(0.94);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.9;
+  }
+}
+.breath-ring {
+  animation: breathe 10s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .breath-ring {
+    animation: none;
+  }
+}
+
+/* Cormorant's default old-style figures look uneven in counters and stats. */
+.font-serif {
+  font-variant-numeric: lining-nums;
+}
