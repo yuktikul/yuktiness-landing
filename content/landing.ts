@@ -35,8 +35,10 @@ export const site = {
     "A 2-hour live masterclass on understanding and improving how you breathe. Explore how your breathing connects with stress, sleep and energy, try a guided practice, and leave with a clear next step.",
   ogTitle: "Breath Alignment Masterclass with Yukti Raj Kishore",
   ogDescription: "2 hours, live, every Wednesday. Understand your breathing pattern, practise with guidance, and leave with a clear next step.",
-  /** TODO: replace with the real contact address. */
-  contactEmail: "hello@example.com",
+  /** Shown in the footer as a tap-to-call link. */
+  contactPhone: "+91 80507 10575",
+  /** Optional. Leave empty to hide the email link. */
+  contactEmail: "",
   privacyUrl: "https://yuktiness.com/privacy-policy/",
 };
 

@@ -28,7 +28,7 @@ Scripts: `npm run build`, `npm start`, `npm test`, `npm run typecheck`, `npm run
 - **All copy** lives in [`content/landing.ts`](content/landing.ts): headline, sections, FAQ, footer, the session schedule, stats, and client stories.
   - Stories: toggle `featured: true/false` to show or hide a story. The quotes are verbatim, so please don't edit their wording.
   - Portrait: put the photo in `public/` and set `guide.portraitSrc` (e.g. `"/yukti-portrait.jpg"`).
-  - Contact email: `site.contactEmail` is a placeholder (`hello@example.com`).
+  - Contact: `site.contactPhone` (tap-to-call in the footer); `site.contactEmail` is optional and hidden when empty.
 - **Brand colours and fonts** are in [`tailwind.config.ts`](tailwind.config.ts).
   `teal.deep` (#1B6F6A) is used for teal *text* on light backgrounds, because #4ECDC4 on off-white is only 1.8:1 contrast. The bright teal stays for accents and dark sections.
 
