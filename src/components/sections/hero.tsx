@@ -1,4 +1,5 @@
-import { cta, hero } from "@content/landing";
+import { cta, hero, signup } from "@content/landing";
+import { SignupForm } from "../signup/signup-form";
 import { LogoLockup } from "../logo";
 import { Countdown } from "../countdown";
 import { ReserveButton } from "../reserve-button";
@@ -31,8 +32,8 @@ export function Hero() {
     <section id="hero" aria-labelledby="hero-heading" className="relative overflow-hidden bg-midnight">
       <BreathRings />
       <TopBar />
-      <div className="relative mx-auto grid max-w-content gap-12 px-4 pb-20 pt-10 sm:px-6 sm:pt-16 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-16 lg:pb-28">
-        <div>
+      <div className="relative mx-auto grid max-w-content gap-12 px-4 pb-20 pt-10 sm:px-6 sm:pt-16 lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-14 lg:pb-24">
+        <div className="lg:pt-10">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal sm:text-sm">{hero.eyebrow}</p>
           <h1 id="hero-heading" className="mt-5 font-serif text-[2.6rem] font-semibold leading-[1.08] tracking-tight text-offwhite sm:text-6xl lg:text-[4.1rem]">
             {hero.headline}
@@ -41,7 +42,11 @@ export function Hero() {
           <ReserveButton className="mt-9 w-full sm:w-auto" />
         </div>
 
-        <div className="rounded-3xl border border-line-dark bg-midnight-2/80 p-6 backdrop-blur-sm sm:p-8">
+        {/* Desktop: the form itself. Mobile/tablet: session info; buttons open the signup sheet. */}
+        <div className="hidden lg:block">
+          <SignupForm idPrefix="hero" title={signup.formTitle} />
+        </div>
+        <div className="rounded-3xl border border-line-dark bg-midnight-2/80 p-6 backdrop-blur-sm sm:p-8 lg:hidden">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-teal">{hero.nextSessionsLabel}</p>
           <SessionDates />
           <div className="mt-7 border-t border-line-dark pt-7">

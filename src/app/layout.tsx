@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { site } from "@content/landing";
+import { checkoutOrigin } from "@/lib/server/checkout";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -41,11 +42,24 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const checkout = checkoutOrigin();
   return (
     <html lang="en-IN" className={`${cormorant.variable} ${montserrat.variable}`} suppressHydrationWarning>
       <head>
         {/* Enables fade-in styles only when JS runs, so content is never hidden without it. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "var d=document.documentElement;d.classList.add('js');try{if(/(?:^|; )yk_consent=/.test(document.cookie))d.classList.add('consent-set')}catch(e){}",
+          }}
+        />
+        {checkout && (
+          <>
+            {/* Warm up the connection to the checkout so it opens fast after submit. */}
+            <link rel="preconnect" href={checkout} />
+            <link rel="dns-prefetch" href={checkout} />
+          </>
+        )}
       </head>
       <body className="font-sans">{children}</body>
     </html>

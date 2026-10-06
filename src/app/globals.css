@@ -90,3 +90,39 @@ details > summary::-webkit-details-marker {
 .font-serif {
   font-variant-numeric: lining-nums;
 }
+
+/* Cookie notice disappears once a choice has been made (class set before first paint). */
+.consent-set .cookie-notice {
+  display: none;
+}
+
+/* Bottom sheet (mobile signup) */
+dialog.sheet {
+  margin: auto 0 0 0;
+  max-width: none;
+  width: 100%;
+  max-height: 92dvh;
+  padding: 0;
+  border: 0;
+  border-radius: 1.5rem 1.5rem 0 0;
+  background: #f7f5f0;
+  color: #0a1628;
+}
+dialog.sheet::backdrop {
+  background: rgba(6, 14, 27, 0.7);
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog.sheet[open] {
+    animation: sheet-in 260ms ease-out;
+  }
+}
+@keyframes sheet-in {
+  from {
+    transform: translateY(24px);
+    opacity: 0.6;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}

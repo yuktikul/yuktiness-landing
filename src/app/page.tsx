@@ -1,6 +1,12 @@
+import { signup } from "@content/landing";
+import { AttributionCapture } from "@/components/attribution-capture";
+import { CookieNotice } from "@/components/cookie-notice";
 import { RevealObserver } from "@/components/reveal-observer";
 import { SessionProvider } from "@/components/session-context";
 import { StickyBar } from "@/components/sticky-bar";
+import { SignupProvider } from "@/components/signup/signup-context";
+import { SignupSheet } from "@/components/signup/signup-sheet";
+import { checkoutUrl } from "@/lib/server/checkout";
 import { Faq, Guide, Learn, SoundsLikeYou, Stats, Stories, Timeline } from "@/components/sections/content-sections";
 import { Footer } from "@/components/sections/footer";
 import { Hero } from "@/components/sections/hero";
@@ -13,6 +19,8 @@ export const revalidate = 60;
 export default function Home() {
   return (
     <SessionProvider initialNow={Date.now()}>
+      <SignupProvider checkoutUrl={checkoutUrl()} summaryError={signup.errors.summary}>
+      <CookieNotice />
       <main>
         <Hero />
         <VideoSection />
@@ -27,7 +35,10 @@ export default function Home() {
       </main>
       <Footer />
       <StickyBar />
+      <SignupSheet />
       <RevealObserver />
+      <AttributionCapture />
+      </SignupProvider>
     </SessionProvider>
   );
 }

@@ -1,5 +1,5 @@
-import { signup } from "@content/landing";
-import { SignupPlaceholder } from "../signup-placeholder";
+import { signup, urgency } from "@content/landing";
+import { SignupForm } from "../signup/signup-form";
 import { SectionHeading } from "./section-heading";
 
 export function SignupSection() {
@@ -12,8 +12,9 @@ export function SignupSection() {
           </SectionHeading>
           <p className="mx-auto mt-4 max-w-xl text-lg text-mist">{signup.intro}</p>
         </div>
-        <div className="mt-12">
-          <SignupPlaceholder />
+        <div className="mx-auto mt-10 max-w-xl">
+          <SignupForm idPrefix="signup" />
+          <p className="mt-6 text-center text-sm text-mist">{urgency.smallGroupLine}</p>
         </div>
       </div>
     </section>

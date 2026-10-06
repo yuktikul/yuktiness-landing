@@ -26,7 +26,8 @@ export function Countdown({
 
   if (compact) {
     return (
-      <span className="font-sans text-xs font-medium tabular-nums text-mist" aria-label={accessibleTime}>
+      <span className={`font-sans text-xs font-medium tabular-nums ${tone === "dark" ? "text-mist" : "text-ink-soft"}`}>
+        <span className="sr-only">{accessibleTime}</span>
         <span aria-hidden="true">
           {days}d {pad(hours)}h {pad(minutes)}m {pad(seconds)}s
         </span>

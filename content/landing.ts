@@ -10,6 +10,8 @@
 export type SessionSlot = {
   /** Stable id used on this site. */
   id: string;
+  /** Fallback id of the matching CRM MasterclassSchedule row (used if the CRM's seat list can't be read). */
+  crmSlotId: string;
   /** Short label used in seat lines, e.g. "Wednesday 7 PM". */
   label: string;
   /** 0 = Sunday … 3 = Wednesday … 6 = Saturday (IST calendar). */
@@ -19,8 +21,8 @@ export type SessionSlot = {
 };
 
 export const schedule: SessionSlot[] = [
-  { id: "wed-1900", label: "Wednesday 7 PM", dayOfWeek: 3, startTime: "19:00" },
-  { id: "wed-1100", label: "Wednesday 11 AM", dayOfWeek: 3, startTime: "11:00" },
+  { id: "wed-1900", crmSlotId: "slot_wed_1900", label: "Wednesday 7 PM", dayOfWeek: 3, startTime: "19:00" },
+  { id: "wed-1100", crmSlotId: "slot_wed_1100", label: "Wednesday 11 AM", dayOfWeek: 3, startTime: "11:00" },
 ];
 
 /** Length of each live masterclass, in minutes. */
@@ -249,15 +251,92 @@ export const faq = {
   ],
 };
 
-// ---------- Signup (placeholder until the form is built) ----------
+// ---------- Signup form ----------
 
 export const signup = {
   heading: "Reserve your seat",
-  intro: "Choose a session below. The short signup form is coming here next.",
-  chooseSlot: "Choose your session",
-  placeholder: "Signup form coming soon.",
+  intro: "One short form, then you go straight to the payment page.",
+  formTitle: "Reserve your seat",
+  formSubtitle: "Takes about 30 seconds. Rs 51 is paid on the next page.",
+  closeLabel: "Close",
+  fields: {
+    name: { label: "Full name", placeholder: "Your full name" },
+    phone: {
+      label: "WhatsApp number",
+      codeLabel: "Country code",
+      placeholder: "98765 43210",
+      hint: "We'll send your session link on WhatsApp.",
+    },
+    email: { label: "Email", placeholder: "you@example.com" },
+    session: { label: "Choose your session" },
+    heard: { label: "How did you first hear about Yuktiness?", placeholder: "Choose one", otherLabel: "Where did you hear about us?" },
+    optional: {
+      summary: "Optional: tell us what you're working on",
+      chipsLabel: "What would you like help with?",
+      noteLabel: "Anything you'd like to share",
+      medicalLabel: "Anything else we should know, for example a medical condition or pregnancy?",
+    },
+    consent: {
+      before: "I agree to be contacted by Yuktiness about this masterclass and related programs, and I accept the ",
+      link: "Privacy Policy",
+      after: ".",
+    },
+  },
+  heardOptions: [
+    { value: "INSTAGRAM", label: "Instagram" },
+    { value: "FACEBOOK", label: "Facebook" },
+    { value: "YOUTUBE", label: "YouTube" },
+    { value: "WHATSAPP", label: "WhatsApp" },
+    { value: "FRIEND_OR_FAMILY", label: "Friend or family" },
+    { value: "GOOGLE_SEARCH", label: "Google search" },
+    { value: "EVENT_OR_WORKSHOP", label: "Event or workshop" },
+    { value: "OTHER", label: "Other" },
+  ],
+  issueOptions: [
+    { value: "STRESS_ANXIETY", label: "Stress or anxiety" },
+    { value: "POOR_SLEEP", label: "Poor sleep" },
+    { value: "LOW_ENERGY_BURNOUT", label: "Low energy or burnout" },
+    { value: "PANIC_OR_FEAR", label: "Panic or fear" },
+    { value: "HEADACHES_MIGRAINES", label: "Headaches or migraines" },
+    { value: "BREATHLESSNESS_OR_MOUTH_BREATHING", label: "Breathlessness or mouth breathing" },
+    { value: "EMOTIONAL_HEAVINESS", label: "Emotional heaviness" },
+    { value: "IMMUNITY_RECOVERY", label: "Immunity and recovery" },
+    { value: "CONSISTENCY_STRUGGLE", label: "Staying consistent" },
+    { value: "WEIGHT_AND_FITNESS", label: "Weight and fitness" },
+    { value: "OTHER", label: "Other" },
+  ],
+  errors: {
+    name: "Please enter your full name.",
+    phoneIndia: "Please enter your 10-digit WhatsApp number.",
+    phoneOther: "Please enter your full WhatsApp number.",
+    phoneCode: "Please enter a country code, like +91.",
+    email: "That email doesn't look right. Please check it, for example name@gmail.com.",
+    session: "Please choose a session.",
+    heard: "Please choose one option.",
+    heardOther: "Please tell us where you heard about us.",
+    consent: "Please tick this box so we can contact you about the masterclass.",
+    summary: "Please check the highlighted fields.",
+  },
   price: "Rs 51",
-  priceNote: "Paid on the next page after you fill the form.",
+  submit: "Reserve my seat and pay Rs 51",
+  submitting: "Taking you to payment…",
+  /** Shown above the button. */
+  countdownPrefix: "Next session starts in",
+  checkoutNote: "Please use the same email or phone number on the payment page.",
+  comingSoon: {
+    heading: "Your seat request is saved",
+    body: "The payment link is coming soon. Your details are saved and our team will be in touch.",
+    sessionLabel: "Session",
+  },
+};
+
+// ---------- Cookie notice ----------
+
+export const cookieNotice = {
+  text: "We use a cookie to remember which ad or link brought you here.",
+  accept: "Accept",
+  decline: "No thanks",
+  policy: "Privacy Policy",
 };
 
 // ---------- Footer ----------
