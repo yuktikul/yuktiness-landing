@@ -4,6 +4,7 @@ import { signup, urgency, hero } from "@content/landing";
 import { formatIST } from "@/lib/schedule";
 import { Countdown } from "./countdown";
 import { SeatsLeft } from "./seats-left";
+import { LogoFull } from "./logo";
 import { useSession } from "./session-context";
 
 /** Placeholder signup card: session choice, countdown and seats. The form is built next. */
@@ -12,6 +13,7 @@ export function SignupPlaceholder() {
 
   return (
     <div className="on-light rounded-3xl bg-offwhite p-6 text-ink shadow-2xl shadow-black/30 sm:p-10">
+      <LogoFull className="mx-auto mb-8 w-40 sm:w-48" />
       <fieldset>
         <legend className="text-sm font-semibold uppercase tracking-[0.16em] text-teal-deep">{signup.chooseSlot}</legend>
         <div className="mt-4 grid gap-3 sm:grid-cols-2">

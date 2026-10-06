@@ -1,4 +1,5 @@
-import { cta, hero, site } from "@content/landing";
+import { cta, hero } from "@content/landing";
+import { LogoLockup } from "../logo";
 import { Countdown } from "../countdown";
 import { ReserveButton } from "../reserve-button";
 import { SeatsLeft } from "../seats-left";
@@ -17,8 +18,8 @@ function BreathRings() {
 export function TopBar() {
   return (
     <header className="relative z-10 mx-auto flex max-w-content items-center justify-between px-4 py-4 sm:px-6">
-      <a href="#hero" className="font-serif text-2xl font-semibold tracking-wide text-offwhite">
-        {site.brand}
+      <a href="#hero" className="rounded-full">
+        <LogoLockup priority />
       </a>
       <ReserveButton size="sm" label={cta.topBarReserve} />
     </header>

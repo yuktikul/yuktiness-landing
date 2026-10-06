@@ -38,7 +38,8 @@ export const site = {
   /** Shown in the footer as a tap-to-call link. */
   contactPhone: "+91 80507 10575",
   /** Optional. Leave empty to hide the email link. */
-  contactEmail: "",
+  contactEmail: "connect@yuktiness.com",
+  logoAlt: "Yuktiness: Breathe Wellness in Abundance",
   privacyUrl: "https://yuktiness.com/privacy-policy/",
 };
 
@@ -65,16 +66,20 @@ export const hero = {
 
 export const urgency = {
   countdownUnits: { days: "Days", hours: "Hours", minutes: "Minutes", seconds: "Seconds" },
-  /** {seats} and {slot} are replaced. */
-  seatsLeft: "Only {seats} seats left for {slot}",
-  seatsVeryFew: "Very few seats left for {slot}: {seats} remaining",
+  /**
+   * Seat lines ({slot} is replaced). No numbers are shown. The wording follows the
+   * real bookings from the CRM, so it stays truthful:
+   *  - default (or if the CRM can't be reached): "Limited seats"
+   *  - when the share of seats left is at or below closingFastShareLeft: "Seats closing fast"
+   *  - when no seats are left: "This session is full"
+   */
+  seatsLimited: "Limited seats for {slot}",
+  seatsClosingFast: "Seats closing fast for {slot}",
   seatsFull: "This session is full: {slot}",
   slotFullShort: "This session is full",
-  /** At or below this many seats, the stronger line is used. */
-  veryFewThreshold: 20,
+  /** 0.3 = show "closing fast" once 30% or fewer of a session's seats remain. */
+  closingFastShareLeft: 0.3,
   smallGroupLine: "We keep each session small so everyone gets personal guidance.",
-  localTimePrefix: "Your local time:",
-  sameAsLocal: "This is your local time too.",
   liveNow: "Live now",
 };
 

@@ -11,3 +11,16 @@ export type SlotSeats = {
 };
 
 export type SeatsResponse = { available: true; slots: SlotSeats[] } | { available: false };
+
+export type SeatState = "limited" | "closing" | "full";
+
+/**
+ * Which wording a session gets. Without real CRM data it's always "limited":
+ * "closing" and "full" are only ever shown when bookings actually say so.
+ */
+export function seatState(seats: Pick<SlotSeats, "capacity" | "seatsLeft"> | undefined, closingFastShareLeft: number): SeatState {
+  if (!seats) return "limited";
+  if (seats.seatsLeft <= 0) return "full";
+  if (seats.capacity > 0 && seats.seatsLeft / seats.capacity <= closingFastShareLeft) return "closing";
+  return "limited";
+}

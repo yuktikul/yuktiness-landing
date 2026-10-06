@@ -25,20 +25,23 @@ Scripts: `npm run build`, `npm start`, `npm test`, `npm run typecheck`, `npm run
 
 ## Editing the page
 
-- **All copy** lives in [`content/landing.ts`](content/landing.ts): headline, sections, FAQ, footer, the session schedule, stats, and client stories.
+- **All copy** lives in [`content/landing.ts`](content/landing.ts): headline, sections, FAQ, footer, the session schedule, stats, and client stories. Session times are shown in IST only (ads target India).
   - Stories: toggle `featured: true/false` to show or hide a story. The quotes are verbatim, so please don't edit their wording.
   - Portrait: put the photo in `public/` and set `guide.portraitSrc` (e.g. `"/yukti-portrait.jpg"`).
-  - Contact: `site.contactPhone` (tap-to-call in the footer); `site.contactEmail` is optional and hidden when empty.
+  - Contact: `site.contactPhone` (tap-to-call) and `site.contactEmail` in the footer.
+  - Logo: `public/brand/logo-full.png` (light backgrounds: signup card, terms page) and `public/brand/logo-mark.png` (tree emblem on an off-white badge in the top bar, footer and share image). Browser icons: `src/app/icon.png`, `src/app/apple-icon.png`.
 - **Brand colours and fonts** are in [`tailwind.config.ts`](tailwind.config.ts).
   `teal.deep` (#1B6F6A) is used for teal *text* on light backgrounds, because #4ECDC4 on off-white is only 1.8:1 contrast. The bright teal stays for accents and dark sections.
 
 ## How the truthful urgency works
 
-- **Session dates**: `schedule` in `content/landing.ts` (Wednesday 19:00 and 11:00 IST). `src/lib/schedule.ts` computes the next real occurrence of each slot in IST, and the visitor's local time is shown underneath.
+- **Session dates**: `schedule` in `content/landing.ts` (Wednesday 19:00 and 11:00 IST). `src/lib/schedule.ts` computes the next real occurrence of each slot in IST.
 - **Countdown**: counts down to the real start of the soonest upcoming session, ticking every second on the client from one shared clock. At zero it moves to the next session. It's the same for every visitor and never resets. Shown in the hero, under the video, in the signup card, and in the sticky mobile bar.
-- **Seats**: the browser calls this app's `/api/seats`, which calls the CRM's `GET /api/public/seats` with the API key and caches the result for 30 seconds. Counts are only used if they match the session date shown on the page. If the CRM can't be reached, or anything looks wrong, the seat lines are simply hidden. No number is ever invented.
-  - ≤ 20 seats → "Very few seats left…" (threshold: `urgency.veryFewThreshold`)
-  - 0 seats → "This session is full", that slot is disabled, and the other slot is selected by default.
+- **Seats**: no numbers are shown. Each session shows one line, and the wording follows the real bookings in the CRM so it stays truthful:
+  - "Limited seats for Wednesday 7 PM": the default, and also what shows if the CRM can't be reached (sessions are genuinely capped).
+  - "Seats closing fast for…": only once 30% or fewer of that session's seats remain (`urgency.closingFastShareLeft`).
+  - "This session is full": at 0 seats. That slot is disabled and the other slot is selected by default.
+  The browser calls this app's `/api/seats`, which calls the CRM's `GET /api/public/seats` with the API key (cached 30 seconds).
 
 ## Sections
 

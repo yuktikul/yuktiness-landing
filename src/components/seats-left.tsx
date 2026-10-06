@@ -1,43 +1,33 @@
 "use client";
 
-import { schedule, urgency } from "@content/landing";
+import { urgency } from "@content/landing";
+import { seatState } from "@/lib/seats";
 import { useSession } from "./session-context";
 
-const fill = (template: string, seats: number, slot: string) =>
-  template.replace("{seats}", String(seats)).replace("{slot}", slot);
-
 /**
- * Real seat counts from the CRM, one line per slot. Renders nothing while loading
- * or if the CRM can't be reached: we never show an invented number.
+ * One line per session: "Limited seats", "Seats closing fast" or "This session is full".
+ * No numbers are shown. "Closing fast" and "full" appear only when the CRM's real
+ * bookings say so; without CRM data the line stays at "Limited seats".
  */
 export function SeatsLeft({ tone = "dark" }: { tone?: "dark" | "light" }) {
-  const { seats } = useSession();
-  if (!seats) return null;
-  const rows = schedule.filter((s) => seats[s.id]);
-  if (rows.length === 0) return null;
+  const { sessions, seats } = useSession();
   const dark = tone === "dark";
 
+  const text = { limited: urgency.seatsLimited, closing: urgency.seatsClosingFast, full: urgency.seatsFull };
+
   return (
-    <ul className="space-y-3" aria-live="polite">
-      {rows.map((slot) => {
-        const { seatsLeft, capacity } = seats[slot.id];
-        const full = seatsLeft === 0;
-        const veryFew = !full && seatsLeft <= urgency.veryFewThreshold;
-        const text = full
-          ? fill(urgency.seatsFull, 0, slot.label)
-          : fill(veryFew ? urgency.seatsVeryFew : urgency.seatsLeft, seatsLeft, slot.label);
-        const taken = capacity > 0 ? Math.round(((capacity - seatsLeft) / capacity) * 100) : 100;
+    <ul className="space-y-2" aria-live="polite">
+      {sessions.map(({ slot }) => {
+        const state = seatState(seats?.[slot.id], urgency.closingFastShareLeft);
         return (
-          <li key={slot.id}>
-            <p className={`text-sm ${veryFew || full ? "font-semibold" : "font-medium"} ${dark ? "text-offwhite" : "text-ink"}`}>
-              {text}
+          <li key={slot.id} className="flex items-center gap-2.5">
+            <span
+              aria-hidden="true"
+              className={`h-2 w-2 shrink-0 rounded-full ${state === "full" ? (dark ? "bg-mist" : "bg-ink-soft") : "bg-amber"}`}
+            />
+            <p className={`text-sm ${state === "limited" ? "font-medium" : "font-semibold"} ${dark ? "text-offwhite" : "text-ink"}`}>
+              {text[state].replace("{slot}", slot.label)}
             </p>
-            <div
-              className={`mt-1.5 h-1 w-full max-w-xs overflow-hidden rounded-full ${dark ? "bg-line-dark" : "bg-line-light"}`}
-              role="presentation"
-            >
-              <div className="h-full rounded-full bg-amber" style={{ width: `${taken}%` }} />
-            </div>
           </li>
         );
       })}

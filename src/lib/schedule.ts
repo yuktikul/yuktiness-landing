@@ -53,21 +53,6 @@ export function formatIST(date: Date): string {
   return `${WEEKDAYS[ist.getUTCDay()]} ${ist.getUTCDate()} ${MONTHS[ist.getUTCMonth()]}, ${h12}:${mins} ${period} IST`;
 }
 
-/** The same instant in the visitor's own timezone (client only). */
-export function formatLocal(date: Date): { text: string; isIST: boolean } {
-  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const isIST = tz === "Asia/Kolkata" || tz === "Asia/Calcutta" || -date.getTimezoneOffset() === 330;
-  const text = new Intl.DateTimeFormat(undefined, {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    hour: "numeric",
-    minute: "2-digit",
-    timeZoneName: "short",
-  }).format(date);
-  return { text, isIST };
-}
-
 /** Split a duration into countdown parts. */
 export function countdownParts(ms: number) {
   const total = Math.max(0, Math.floor(ms / 1000));

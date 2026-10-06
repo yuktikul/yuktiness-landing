@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { footer, site, terms } from "@content/landing";
+import { LogoFull } from "@/components/logo";
 
 export const metadata: Metadata = { title: `${terms.heading} | ${site.brand}`, robots: { index: false } };
 
 export default function TermsPage() {
   return (
     <main className="on-light mx-auto min-h-screen max-w-2xl px-4 py-20 sm:px-6">
+      <LogoFull className="mb-10 w-44" />
       <Link href="/" className="text-sm font-medium text-teal-deep underline underline-offset-4">
         {terms.backLabel}
       </Link>

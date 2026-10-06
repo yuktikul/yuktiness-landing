@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { footer, site } from "@content/landing";
+import { LogoLockup } from "../logo";
 
 export function Footer() {
   return (
     <footer className="bg-[#060E1B] px-4 pb-28 pt-14 text-mist sm:px-6 md:pb-14">
       <div className="mx-auto max-w-content">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
-          <p className="font-serif text-2xl font-semibold text-offwhite">{site.brand}</p>
+          <LogoLockup size="lg" />
           <nav aria-label="Footer" className="flex flex-col gap-3 text-sm sm:flex-row sm:gap-8">
             <a href={`tel:${site.contactPhone.replace(/[^\d+]/g, "")}`} className="hover:text-offwhite">
               {footer.contactLabel}: {site.contactPhone}
