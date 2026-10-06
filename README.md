@@ -65,10 +65,13 @@ Scripts: `npm run build`, `npm start`, `npm test`, `npm run typecheck`, `npm run
 
 After the complete call, the visitor goes to `CHECKOUT_URL` (the Rs 51 masterclass checkout on the academy platform, which uses Razorpay).
 
-**Prefill: not confirmed, so the plain URL is used.** I could not open `wahacademy.yuktiness.com` from the build environment (its network policy blocks that domain), so I couldn't check whether the checkout reads name / email / phone from the URL. Prefill is therefore **off** by default. To test it yourself:
+The checkout is hosted by **TagMango** (the academy platform) and paid through Razorpay.
 
-1. Open `https://wahacademy.yuktiness.com/web/checkout/6a719e2e03959b96644a66dc?purchaseNow=true&name=Test%20Name&email=test%40example.com&phone=9876543210`.
-2. If the fields come pre-filled, set `CHECKOUT_PREFILL_PARAMS="name=name,email=email,phone=phone"`, using the checkout's own parameter names on the right of each `=`, and redeploy.
+**Prefill: on, and confirmed.** The checkout fills its Billing information from `name`, `email` and `phone` in the link, so the visitor arrives with everything already typed. `CHECKOUT_PREFILL_PARAMS="name=name,email=email,phone=phone"`.
+- `phone` is sent as the **national number without the country code** (e.g. `9876543210`), because the checkout has its own country picker.
+- That picker is **set from the visitor's location**: +91 in India, +61 in Australia, and so on. A visitor abroad with an Indian number would need to switch it to +91 themselves.
+- Visitors outside India see the price in **USD** (Rs 51 showed as USD 1 from Australia). The CRM records the currency on CSV imports.
+- The checkout also offers an optional **add-on** ("Life Alignment 121 Call"), so an order can be more than Rs 51.
 
 Because payments are matched to leads by **email or phone**, the form tells visitors: "Please use the same email or phone number on the payment page."
 

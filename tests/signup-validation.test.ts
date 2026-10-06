@@ -58,10 +58,11 @@ describe("checkoutUrl", () => {
   it("appends mapped prefill params when configured", () => {
     process.env.CHECKOUT_URL = URL_;
     process.env.CHECKOUT_PREFILL_PARAMS = "name=name,email=email,phone=phone";
-    const u = new URL(checkoutUrl({ name: "Shalini B", email: "s@x.in", phone: "+919811122334" })!);
+    const u = new URL(checkoutUrl({ name: "Shalini B", email: "s@x.in", phone: "9811122334" })!);
     expect(u.searchParams.get("purchaseNow")).toBe("true");
+    expect(u.searchParams.get("name")).toBe("Shalini B");
     expect(u.searchParams.get("email")).toBe("s@x.in");
-    expect(u.searchParams.get("phone")).toBe("+919811122334");
+    expect(u.searchParams.get("phone")).toBe("9811122334");
   });
   it("null when not configured", () => {
     process.env.CHECKOUT_URL = "";

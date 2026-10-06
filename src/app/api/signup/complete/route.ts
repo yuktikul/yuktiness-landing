@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { schedule } from "@content/landing";
 import { nextOccurrence, formatIST } from "@/lib/schedule";
-import { composeIssuesNote, toE164 } from "@/lib/signup-validation";
+import { cleanNational, composeIssuesNote, toE164 } from "@/lib/signup-validation";
 import { checkoutUrl } from "@/lib/server/checkout";
 import { postLeadToCrm } from "@/lib/server/crm";
 import { enqueueFailedSignup } from "@/lib/server/queue";
@@ -32,7 +32,9 @@ export async function POST(req: Request) {
   const session = nextOccurrence(slot, Date.now());
   const confirmation = { name: input.fullName.trim(), session: formatIST(session.startsAt) };
   const phoneE164 = toE164(input.phoneCode, input.phone);
-  const redirectUrl = checkoutUrl({ name: input.fullName.trim(), email: input.email.trim(), phone: phoneE164 ?? "" });
+  // The checkout has its own country picker (set from the visitor's location), so it gets the
+  // national number only, e.g. "9876543210", which is the format confirmed to prefill.
+  const redirectUrl = checkoutUrl({ name: input.fullName.trim(), email: input.email.trim(), phone: cleanNational(input.phoneCode, input.phone) });
 
   if (input.website) return json({ ok: true, redirectUrl, confirmation }); // honeypot
 

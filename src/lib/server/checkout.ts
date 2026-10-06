@@ -1,9 +1,9 @@
 /**
- * The academy checkout URL (CHECKOUT_URL), optionally with the visitor's details appended.
+ * The academy checkout URL (CHECKOUT_URL), with the visitor's details appended.
  *
- * CHECKOUT_PREFILL_PARAMS maps our fields to the checkout's query-parameter names, e.g.
- * "name=name,email=email,phone=phone". Leave it empty to send the plain URL. It is empty by
- * default because prefill on the academy checkout hasn't been confirmed (see README).
+ * CHECKOUT_PREFILL_PARAMS maps our fields to the checkout's query-parameter names. The TagMango
+ * checkout is confirmed to prefill from "name=name,email=email,phone=phone" (phone = national
+ * number, without the country code). Leave it empty to send the plain URL.
  */
 export function checkoutUrl(details?: { name: string; email: string; phone: string }): string | null {
   const base = process.env.CHECKOUT_URL?.trim();
