@@ -1,7 +1,7 @@
 # Yuktiness: Breath Alignment Masterclass landing page
 
 The public landing page for the 2-hour live Breath Alignment Masterclass. It is a
-**separate app** from the CRM (`../yuktiness-crm`) and has **no database**: signups are
+**separate app** from the CRM ([yuktikul/yuktiness-crm](https://github.com/yuktikul/yuktiness-crm)) and has **no database**: signups are
 handed to the CRM server-to-server, then the visitor goes straight to the academy checkout.
 
 **Stack:** Next.js 15 (App Router) · TypeScript · Tailwind CSS · next/font (Cormorant Garamond + Montserrat). No UI libraries.
@@ -9,7 +9,7 @@ handed to the CRM server-to-server, then the visitor goes straight to the academ
 ## Run it
 
 ```bash
-cd yuktiness-landing
+git clone https://github.com/yuktikul/yuktiness-landing.git && cd yuktiness-landing
 npm install
 cp .env.example .env.local   # fill in the values below
 npm run dev                  # http://localhost:3000
