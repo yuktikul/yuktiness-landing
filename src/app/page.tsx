@@ -1,5 +1,6 @@
 import { signup } from "@content/landing";
 import { AttributionCapture } from "@/components/attribution-capture";
+import { MetaPixel } from "@/components/meta-pixel";
 import { CookieNotice } from "@/components/cookie-notice";
 import { RevealObserver } from "@/components/reveal-observer";
 import { SessionProvider } from "@/components/session-context";
@@ -38,6 +39,7 @@ export default function Home() {
       <SignupSheet />
       <RevealObserver />
       <AttributionCapture />
+      <MetaPixel />
       </SignupProvider>
     </SessionProvider>
   );

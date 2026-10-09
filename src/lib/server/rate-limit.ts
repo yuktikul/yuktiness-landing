@@ -13,5 +13,11 @@ export function rateLimit(key: string, limit: number, windowMs: number, now = Da
 }
 
 export function clientIp(req: Request): string {
-  return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip")?.trim() || "unknown";
+  // Platform-set headers first (Vercel sets these; clients can't spoof them), then the proxy chain.
+  return (
+    req.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip")?.trim() ||
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    "unknown"
+  );
 }

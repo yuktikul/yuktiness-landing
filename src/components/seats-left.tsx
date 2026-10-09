@@ -1,7 +1,7 @@
 "use client";
 
 import { urgency } from "@content/landing";
-import { seatState } from "@/lib/seats";
+import { stateOf } from "@/lib/seats";
 import { useSession } from "./session-context";
 
 /**
@@ -18,7 +18,7 @@ export function SeatsLeft({ tone = "dark" }: { tone?: "dark" | "light" }) {
   return (
     <ul className="space-y-2" aria-live="polite">
       {sessions.map(({ slot }) => {
-        const state = seatState(seats?.[slot.id], urgency.closingFastShareLeft);
+        const state = stateOf(seats, slot.id);
         return (
           <li key={slot.id} className="flex items-center gap-2.5">
             <span

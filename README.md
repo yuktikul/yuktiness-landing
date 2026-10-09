@@ -91,8 +91,20 @@ utm_source=facebook&utm_medium=paid&utm_campaign={{campaign.name}}&utm_content={
 
 The CRM fills its Meta name fields from these UTMs (campaign name ← `utm_campaign`, ad name ← `utm_content`, ad set name ← `utm_term`) and stores the ids and placement directly.
 
+## Meta Pixel and Conversions API (optional)
+
+Nothing loads or is sent unless the environment variables are set, and then only for visitors who **accepted** the cookie notice.
+- **Browser Pixel** (`NEXT_PUBLIC_META_PIXEL_ID`): loads after Accept and fires `PageView`. When the signup completes it fires `Lead` with an `eventID`.
+- **Server event** (`META_PIXEL_ID` + `META_CAPI_TOKEN`): the complete route sends the same `Lead` to the Conversions API with the **same `event_id`**, so Meta de-duplicates the two. It runs after the response is sent, so the redirect to checkout is never slowed down.
+- **What the server event carries:** the email (trimmed, lowercased) and the phone (E.164 without `+`, e.g. `919876543210`), each SHA-256 hashed, plus `fbp`, `fbc` (built from `fbclid` when there's no `_fbc` cookie), the visitor's IP and user agent, and the landing URL. Raw contact details are never sent.
+- **When something is missing:** if the variables aren't set, everything is skipped silently. A failed call is logged without personal data.
+- **Testing:** set `META_TEST_EVENT_CODE`, then watch **Events Manager → Test events**.
+
+`GET /api/health` returns `{"status":"ok"}` for uptime monitors.
+
 ## Privacy
 
+- **Security headers**: a Content-Security-Policy that allows only Meta, YouTube / Vimeo and this site, plus `X-Frame-Options: DENY`, `Referrer-Policy`, `nosniff` and HSTS in production. The signup routes reject cross-site posts.
 - **Cookie notice**: a slim bar in the normal page flow at the very top. It never overlays anything, so it can't cover the form or a button. It is hidden before first paint once a choice exists, so there's no layout jump. It links to https://yuktiness.com/privacy-policy/ (new tab), as do the form's consent line and the footer.
 - **My choice on storage**:
   - **Before the visitor chooses**, attribution is kept in `sessionStorage` only. That is first-party, limited to this tab, deleted when the tab closes, and used only to attach the source to a signup the visitor makes in this visit. Nothing persistent is written and nothing is sent anywhere until they submit the form (which has its own consent checkbox). I consider this acceptable as minimal, session-only storage, and it means visitors who ignore the bar are still attributed.

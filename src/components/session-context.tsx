@@ -61,7 +61,7 @@ export function SessionProvider({ initialNow, children }: { initialNow: number; 
   }, [seats, sessions]);
 
   // Default: the soonest session that isn't full. A visitor's own choice wins unless it fills up.
-  const isFull = (id: string) => currentSeats?.[id]?.seatsLeft === 0;
+  const isFull = (id: string) => currentSeats?.[id]?.state === "full";
   const fallback = sessions.find((s) => !isFull(s.slot.id))?.slot.id ?? sessions[0].slot.id;
   const selectedSlotId = chosenSlotId && !isFull(chosenSlotId) ? chosenSlotId : fallback;
 

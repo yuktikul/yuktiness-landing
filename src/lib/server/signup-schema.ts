@@ -62,6 +62,8 @@ export const completeSchema = z.object({
   consent: z.literal(true),
   website: honeypot,
   attribution: attributionSchema,
+  /** The visitor's cookie choice; the Conversions API event is only sent after "accepted". */
+  marketingConsent: z.enum(["accepted", "declined", "pending"]).default("pending"),
 });
 
 /** Run the same plain-word rules the browser uses. Returns field → message. */

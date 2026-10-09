@@ -98,6 +98,7 @@ export function captureFirstTouch() {
 export function setConsent(choice: "accepted" | "declined") {
   writeCookie(CONSENT, choice, CONSENT_DAYS);
   document.documentElement.classList.add("consent-set");
+  window.dispatchEvent(new CustomEvent("yk:consent", { detail: choice }));
   if (choice === "accepted") {
     captureFirstTouch();
   } else {

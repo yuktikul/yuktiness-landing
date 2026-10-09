@@ -1,7 +1,8 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { getAttributionForSubmit } from "@/lib/attribution";
+import { getAttributionForSubmit, getConsent } from "@/lib/attribution";
+import { trackLead } from "../meta-pixel";
 import { contactReady, FIELD_ORDER, validateAll, validateField, type FieldName, type SignupValues } from "@/lib/signup-validation";
 import { useSession } from "../session-context";
 
@@ -110,7 +111,7 @@ export function SignupProvider({ checkoutUrl, summaryError, children }: { checko
     try {
       const { status: code, data } = await postJson(
         "/api/signup/complete",
-        { ...values, leadId: leadId.current, website: honeypotValue(), attribution: getAttributionForSubmit() },
+        { ...values, leadId: leadId.current, website: honeypotValue(), attribution: getAttributionForSubmit(), marketingConsent: getConsent() ?? "pending" },
         10000,
       );
       if (code === 400 && data?.errors) {
@@ -119,9 +120,12 @@ export function SignupProvider({ checkoutUrl, summaryError, children }: { checko
         return;
       }
       if (data?.redirectUrl) {
-        window.location.assign(data.redirectUrl);
+        // Browser Pixel "Lead" (same event id as the server's Conversions API event), then go.
+        const tracked = data.eventId ? trackLead(data.eventId) : false;
+        setTimeout(() => window.location.assign(data.redirectUrl), tracked ? 250 : 0);
         return; // keep the spinner while the checkout loads
       }
+      if (data?.eventId) trackLead(data.eventId);
       setConfirmation(data?.confirmation ?? { name: values.fullName, session: "" });
       setStatus("done");
     } catch {

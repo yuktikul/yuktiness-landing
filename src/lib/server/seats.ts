@@ -1,6 +1,7 @@
 import { schedule } from "@content/landing";
 import { nextOccurrence } from "@/lib/schedule";
-import type { SlotSeats } from "@/lib/seats";
+import { urgency } from "@content/landing";
+import { seatState, type SlotSeats } from "@/lib/seats";
 
 const CACHE_MS = 30_000;
 let cache: { at: number; slots: SlotSeats[] } | null = null;
@@ -41,7 +42,7 @@ async function fetchFromCrm(): Promise<SlotSeats[] | null> {
       const crm = raw.find((s): s is CrmSlot => isCrmSlot(s) && s.dayOfWeek === slot.dayOfWeek && s.startTime === slot.startTime);
       // Only trust counts for the same session date we're showing.
       if (crm && crm.date === nextOccurrence(slot, now).istDate) {
-        matched.push({ slotId: slot.id, crmSlotId: crm.slotId, date: crm.date, capacity: crm.capacity, seatsLeft: crm.seatsLeft });
+        matched.push({ slotId: slot.id, crmSlotId: crm.slotId, date: crm.date, state: seatState(crm, urgency.closingFastShareLeft) });
       }
     }
     return matched;

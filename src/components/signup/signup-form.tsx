@@ -2,7 +2,7 @@
 
 import { signup, site, urgency } from "@content/landing";
 import { formatIST } from "@/lib/schedule";
-import { seatState } from "@/lib/seats";
+import { stateOf } from "@/lib/seats";
 import type { FieldName } from "@/lib/signup-validation";
 import { Countdown } from "../countdown";
 import { useSession } from "../session-context";
@@ -62,7 +62,7 @@ export function SignupForm({ idPrefix, title, titleId, autoFocus = false }: { id
   }
 
   const selected = sessions.find((x) => x.slot.id === values.slotId) ?? sessions[0];
-  const selectedState = seatState(seats?.[selected.slot.id], urgency.closingFastShareLeft);
+  const selectedState = stateOf(seats, selected.slot.id);
   const seatText = { limited: urgency.seatsLimited, closing: urgency.seatsClosingFast, full: urgency.seatsFull }[selectedState].replace(
     "{slot}",
     selected.slot.label,
@@ -186,7 +186,7 @@ export function SignupForm({ idPrefix, title, titleId, autoFocus = false }: { id
           <legend className={labelCls}>{F.session.label}</legend>
           <div className="grid gap-2.5 sm:grid-cols-2">
             {sessions.map((x, i) => {
-              const state = seatState(seats?.[x.slot.id], urgency.closingFastShareLeft);
+              const state = stateOf(seats, x.slot.id);
               const full = state === "full";
               const note = full ? urgency.slotFullShort : state === "closing" ? "Seats closing fast" : "Limited seats";
               return (
