@@ -5,6 +5,8 @@ import { Countdown } from "../countdown";
 import { ReserveButton } from "../reserve-button";
 import { SeatsLeft } from "../seats-left";
 import { SessionDates } from "../session-dates";
+import { PriceTag } from "../price-tag";
+import { ReviewMetrics } from "../review-metrics";
 
 function BreathRings() {
   return (
@@ -39,7 +41,12 @@ export function Hero() {
             {hero.headline}
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-mist">{hero.subline}</p>
-          <ReserveButton className="mt-9 w-full sm:w-auto" />
+          <PriceTag className="mt-8" />
+          <ReserveButton className="mt-4 w-full sm:w-auto" />
+          <div className="mt-7">
+            <Countdown label={hero.countdownLabel} />
+          </div>
+          <ReviewMetrics className="mt-7" />
         </div>
 
         {/* Desktop: the form itself. Mobile/tablet: session info; buttons open the signup sheet. */}
@@ -49,9 +56,6 @@ export function Hero() {
         <div className="rounded-3xl border border-line-dark bg-midnight-2/80 p-6 backdrop-blur-sm sm:p-8 lg:hidden">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-teal">{hero.nextSessionsLabel}</p>
           <SessionDates />
-          <div className="mt-7 border-t border-line-dark pt-7">
-            <Countdown label={hero.countdownLabel} />
-          </div>
           <div className="mt-7 empty:hidden">
             <SeatsLeft />
           </div>

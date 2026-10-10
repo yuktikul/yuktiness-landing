@@ -48,9 +48,9 @@ export const site = {
 // ---------- Navigation / CTAs ----------
 
 export const cta = {
-  reserve: "Reserve my seat",
-  topBarReserve: "Reserve my seat",
-  stickyReserve: "Reserve my seat",
+  reserve: "Reserve my spot",
+  topBarReserve: "Reserve my spot",
+  stickyReserve: "Reserve my spot",
 };
 
 // ---------- Hero ----------
@@ -64,6 +64,34 @@ export const hero = {
   stickyCountdownLabel: "Next session in",
 };
 
+// ---------- Price ----------
+
+export const pricing = {
+  price: "₹51",
+  /**
+   * Shown struck through next to the price. Only show a price that is genuinely the regular
+   * price of this masterclass: Indian consumer law (Consumer Protection Act 2019 and the CCPA
+   * guidelines on misleading ads) treats an invented "was" price as misleading.
+   * Set to "" to hide it.
+   */
+  regularPrice: "₹499",
+  regularPriceLabel: "Regular price",
+};
+
+// ---------- Review metrics (shown under the hero button) ----------
+
+/**
+ * Fill in your real public ratings. A row with an empty rating or count is hidden,
+ * so nothing is shown until you add the actual numbers from each profile.
+ */
+export const reviewMetrics = {
+  ratings: [
+    { source: "Google", rating: "", count: "" },
+    { source: "Trustpilot", rating: "", count: "" },
+  ],
+  impact: { value: "15,000+", label: "lives impacted" },
+};
+
 // ---------- Countdown / seats ----------
 
 export const urgency = {
@@ -75,8 +103,8 @@ export const urgency = {
    *  - when the share of seats left is at or below closingFastShareLeft: "Seats closing fast"
    *  - when no seats are left: "This session is full"
    */
-  seatsLimited: "Limited seats for {slot}",
-  seatsClosingFast: "Seats closing fast for {slot}",
+  seatsLimited: "Limited spots for {slot}",
+  seatsClosingFast: "Spots closing fast for {slot}",
   seatsFull: "This session is full: {slot}",
   slotFullShort: "This session is full",
   /** 0.3 = show "closing fast" once 30% or fewer of a session's seats remain. */
@@ -254,9 +282,9 @@ export const faq = {
 // ---------- Signup form ----------
 
 export const signup = {
-  heading: "Reserve your seat",
+  heading: "Reserve your spot",
   intro: "One short form, then you go straight to the payment page.",
-  formTitle: "Reserve your seat",
+  formTitle: "Reserve your spot",
   formSubtitle: "Takes about 30 seconds.",
   closeLabel: "Close",
   fields: {
@@ -317,14 +345,14 @@ export const signup = {
     consent: "Please tick this box so we can contact you about the masterclass.",
     summary: "Please check the highlighted fields.",
   },
-  price: "Rs 51",
-  submit: "Reserve my seat and pay Rs 51",
+  price: "₹51",
+  submit: "Reserve my spot and pay ₹51",
   submitting: "Taking you to payment…",
   /** Shown above the button. */
   countdownPrefix: "Next session starts in",
   checkoutNote: "Please use the same email or phone number on the payment page.",
   comingSoon: {
-    heading: "Your seat request is saved",
+    heading: "Your spot request is saved",
     body: "The payment link is coming soon. Your details are saved and our team will be in touch.",
     sessionLabel: "Session",
   },
