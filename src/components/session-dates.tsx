@@ -4,9 +4,10 @@ import { formatIST } from "@/lib/schedule";
 import { useSession } from "./session-context";
 
 /** The next session's date, in IST. */
-export function SessionDates({ tone = "dark" }: { tone?: "dark" | "light" }) {
+export function SessionDates({ tone = "dark", inline = false }: { tone?: "dark" | "light"; inline?: boolean }) {
   const { next } = useSession();
   const dark = tone === "dark";
+  if (inline) return <span className="font-semibold">{formatIST(next.startsAt)}</span>;
 
   return (
     <ul className="space-y-3">

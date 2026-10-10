@@ -108,6 +108,15 @@ dialog.sheet {
   background: #f7f5f0;
   color: #0a1628;
 }
+/* Desktop: the same form as a centred dialog */
+@media (min-width: 1024px) {
+  dialog.sheet {
+    margin: auto;
+    width: min(34rem, calc(100% - 2rem));
+    max-height: 90dvh;
+    border-radius: 1.5rem;
+  }
+}
 dialog.sheet::backdrop {
   background: rgba(6, 14, 27, 0.7);
 }

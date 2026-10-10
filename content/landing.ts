@@ -119,7 +119,7 @@ export const video = {
   heading: "Watch this short video before you register",
   placeholderNote: "The video will appear here soon.",
   playLabel: "Play video",
-  ctaNote: "Rs 51 · Live online · 2 hours",
+  ctaNote: "Live online · 2 hours",
 };
 
 // ---------- Does this sound like you? ----------

@@ -12,7 +12,6 @@ import { Faq, Guide, Learn, SoundsLikeYou, Stats, Stories, Timeline } from "@/co
 import { Footer } from "@/components/sections/footer";
 import { Hero } from "@/components/sections/hero";
 import { SignupSection } from "@/components/sections/signup-section";
-import { VideoSection } from "@/components/sections/video-section";
 
 // Re-render at most once a minute so the server-rendered session dates are always current.
 export const revalidate = 60;
@@ -24,7 +23,6 @@ export default function Home() {
       <CookieNotice />
       <main>
         <Hero />
-        <VideoSection />
         <SoundsLikeYou />
         <Learn />
         <Timeline />

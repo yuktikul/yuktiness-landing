@@ -5,7 +5,7 @@ import { signup } from "@content/landing";
 import { SignupForm } from "./signup-form";
 import { useSignup } from "./signup-context";
 
-/** Mobile bottom sheet. A native <dialog>: focus is trapped, Esc closes it, the page behind is inert. */
+/** Signup popup: bottom sheet on phones, centred dialog on desktop. A native <dialog>: focus is trapped, Esc closes it, the page behind is inert. */
 export function SignupSheet() {
   const { sheetOpen, closeSheet } = useSignup();
   const ref = useRef<HTMLDialogElement>(null);
@@ -34,7 +34,7 @@ export function SignupSheet() {
     >
       {sheetOpen && (
         <div className="relative">
-          <div aria-hidden="true" className="mx-auto mt-2.5 h-1.5 w-12 rounded-full bg-line-light" />
+          <div aria-hidden="true" className="mx-auto mt-2.5 h-1.5 w-12 rounded-full bg-line-light lg:hidden" />
           <button
             type="button"
             onClick={closeSheet}

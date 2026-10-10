@@ -1,5 +1,5 @@
-import { cta, hero, signup } from "@content/landing";
-import { SignupForm } from "../signup/signup-form";
+import { cta, hero, video } from "@content/landing";
+import { VslPlayer } from "../vsl-player";
 import { LogoLockup } from "../logo";
 import { Countdown } from "../countdown";
 import { ReserveButton } from "../reserve-button";
@@ -34,32 +34,34 @@ export function Hero() {
     <section id="hero" aria-labelledby="hero-heading" className="relative overflow-hidden bg-midnight">
       <BreathRings />
       <TopBar />
-      <div className="relative mx-auto grid max-w-content gap-12 px-4 pb-20 pt-10 sm:px-6 sm:pt-16 lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-14 lg:pb-24">
-        <div className="lg:pt-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal sm:text-sm">{hero.eyebrow}</p>
-          <h1 id="hero-heading" className="mt-5 font-serif text-[2.6rem] font-semibold leading-[1.08] tracking-tight text-offwhite sm:text-6xl lg:text-[4.1rem]">
-            {hero.headline}
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-mist">{hero.subline}</p>
-          <PriceTag className="mt-8" />
-          <ReserveButton className="mt-4 w-full sm:w-auto" />
-          <div className="mt-7">
-            <Countdown label={hero.countdownLabel} />
-          </div>
-          <ReviewMetrics className="mt-7" />
-        </div>
+      <div className="relative mx-auto flex max-w-4xl flex-col items-center px-4 pb-20 pt-8 text-center sm:px-6 sm:pt-14 lg:pb-24">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal sm:text-sm">{hero.eyebrow}</p>
+        <h1 id="hero-heading" className="mt-5 font-serif text-[2.4rem] font-semibold leading-[1.08] tracking-tight text-offwhite sm:text-6xl lg:text-[4.1rem]">
+          {hero.headline}
+        </h1>
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist">{hero.subline}</p>
 
-        {/* Desktop: the form itself. Mobile/tablet: session info; buttons open the signup sheet. */}
-        <div className="hidden lg:block">
-          <SignupForm idPrefix="hero" title={signup.formTitle} />
+        {/* 1. Headline → 2. VSL → 3. "Reserve my spot" directly below it */}
+        <div className="mt-10 w-full">
+          <VslPlayer />
         </div>
-        <div className="rounded-3xl border border-line-dark bg-midnight-2/80 p-6 backdrop-blur-sm sm:p-8 lg:hidden">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-teal">{hero.nextSessionsLabel}</p>
-          <SessionDates />
-          <div className="mt-7 empty:hidden">
+        <ReserveButton className="mt-8 w-full sm:w-auto sm:min-w-80" />
+        <PriceTag className="mt-5 justify-center" />
+        <p className="mt-1 text-sm text-mist">{video.ctaNote}</p>
+
+        <div className="mt-8 flex flex-col items-center">
+          <Countdown label={hero.countdownLabel} />
+        </div>
+        <div className="mt-6 flex flex-col items-center gap-2 text-sm">
+          <p className="text-offwhite">
+            <span className="text-mist">{hero.nextSessionsLabel}: </span>
+            <SessionDates inline />
+          </p>
+          <div className="empty:hidden">
             <SeatsLeft />
           </div>
         </div>
+        <ReviewMetrics className="mt-7 justify-center" />
       </div>
     </section>
   );
