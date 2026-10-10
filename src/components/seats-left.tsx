@@ -5,19 +5,19 @@ import { stateOf } from "@/lib/seats";
 import { useSession } from "./session-context";
 
 /**
- * One line per session: "Limited seats", "Seats closing fast" or "This session is full".
+ * One line for the next session: "Limited seats", "Seats closing fast" or "This session is full".
  * No numbers are shown. "Closing fast" and "full" appear only when the CRM's real
  * bookings say so; without CRM data the line stays at "Limited seats".
  */
 export function SeatsLeft({ tone = "dark" }: { tone?: "dark" | "light" }) {
-  const { sessions, seats } = useSession();
+  const { next, seats } = useSession();
   const dark = tone === "dark";
 
   const text = { limited: urgency.seatsLimited, closing: urgency.seatsClosingFast, full: urgency.seatsFull };
 
   return (
     <ul className="space-y-2" aria-live="polite">
-      {sessions.map(({ slot }) => {
+      {[next].map(({ slot }) => {
         const state = stateOf(seats, slot.id);
         return (
           <li key={slot.id} className="flex items-center gap-2.5">

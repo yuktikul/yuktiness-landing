@@ -13,7 +13,6 @@ type EditableValues = Omit<SignupValues, "slotId">;
 type SignupState = {
   values: SignupValues;
   set: <K extends keyof EditableValues>(field: K, value: EditableValues[K]) => void;
-  setSlot: (id: string) => void;
   touch: (field: FieldName) => void;
   errorFor: (field: FieldName) => string | null;
   /** Call on blur of name / phone / email: saves a partial lead once all three are valid. */
@@ -54,7 +53,7 @@ async function postJson(url: string, body: unknown, timeoutMs: number) {
 }
 
 export function SignupProvider({ checkoutUrl, summaryError, children }: { checkoutUrl: string | null; summaryError: string; children: ReactNode }) {
-  const { selectedSlotId, selectSlot } = useSession();
+  const { selectedSlotId } = useSession();
   const [form, setForm] = useState<EditableValues>(initial);
   const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
@@ -142,7 +141,6 @@ export function SignupProvider({ checkoutUrl, summaryError, children }: { checko
   const value: SignupState = {
     values,
     set,
-    setSlot: selectSlot,
     touch,
     errorFor,
     saveContactIfReady,

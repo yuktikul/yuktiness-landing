@@ -13,8 +13,9 @@ type SessionState = {
   sessions: UpcomingSession[];
   /** Seat counts by our slot id; null while loading or if the CRM can't be reached. */
   seats: Record<string, SlotSeats> | null;
+  /** The session a visitor signs up for: the soonest one that isn't full. Chosen automatically. */
+  next: UpcomingSession;
   selectedSlotId: string;
-  selectSlot: (id: string) => void;
 };
 
 const SessionContext = createContext<SessionState | null>(null);
@@ -27,7 +28,6 @@ export function SessionProvider({ initialNow, children }: { initialNow: number; 
   const sessions = useMemo(() => upcomingSessions(schedule, now), [now]);
 
   const [seats, setSeats] = useState<Record<string, SlotSeats> | null>(null);
-  const [chosenSlotId, setChosenSlotId] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -60,12 +60,11 @@ export function SessionProvider({ initialNow, children }: { initialNow: number; 
     return valid;
   }, [seats, sessions]);
 
-  // Default: the soonest session that isn't full. A visitor's own choice wins unless it fills up.
+  // Visitors don't choose: they're booked into the soonest session that isn't full.
   const isFull = (id: string) => currentSeats?.[id]?.state === "full";
-  const fallback = sessions.find((s) => !isFull(s.slot.id))?.slot.id ?? sessions[0].slot.id;
-  const selectedSlotId = chosenSlotId && !isFull(chosenSlotId) ? chosenSlotId : fallback;
+  const next = sessions.find((s) => !isFull(s.slot.id)) ?? sessions[0];
 
-  const value: SessionState = { now, sessions, seats: currentSeats, selectedSlotId, selectSlot: setChosenSlotId };
+  const value: SessionState = { now, sessions, seats: currentSeats, next, selectedSlotId: next.slot.id };
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }
 

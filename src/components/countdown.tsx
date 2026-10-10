@@ -19,8 +19,7 @@ export function Countdown({
   label?: string;
   compact?: boolean;
 }) {
-  const { now, sessions } = useSession();
-  const next = sessions[0];
+  const { now, next } = useSession();
   const { days, hours, minutes, seconds } = countdownParts(next.startsAt.getTime() - now);
   const accessibleTime = `${days} days ${hours} hours ${minutes} minutes until ${formatIST(next.startsAt)}`;
 

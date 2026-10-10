@@ -59,7 +59,7 @@ export const hero = {
   eyebrow: "A 2-hour live masterclass with Yukti Raj Kishore",
   headline: "Your breath is quietly shaping your stress, sleep and energy. Learn to realign it.",
   subline: "Understand your own breathing pattern, try a guided practice, and leave with a clear next step.",
-  nextSessionsLabel: "Next live sessions",
+  nextSessionsLabel: "Next live session",
   countdownLabel: "Next session starts in",
   stickyCountdownLabel: "Next session in",
 };
@@ -247,7 +247,7 @@ export const faq = {
       q: "Is it safe for everyone?",
       a: "People with certain medical conditions, or who are pregnant, should check with their doctor and tell us on the form.",
     },
-    { q: "What does it cost?", a: "Rs 51, paid on the next page after you fill the form." },
+    { q: "What does it cost?", a: "Rs 51." },
   ],
 };
 
@@ -257,7 +257,7 @@ export const signup = {
   heading: "Reserve your seat",
   intro: "One short form, then you go straight to the payment page.",
   formTitle: "Reserve your seat",
-  formSubtitle: "Takes about 30 seconds. Rs 51 is paid on the next page.",
+  formSubtitle: "Takes about 30 seconds.",
   closeLabel: "Close",
   fields: {
     name: { label: "Full name", placeholder: "Your full name" },
@@ -268,7 +268,7 @@ export const signup = {
       hint: "We'll send your session link on WhatsApp.",
     },
     email: { label: "Email", placeholder: "you@example.com" },
-    session: { label: "Choose your session" },
+    session: { label: "Your session", note: "The next live masterclass" },
     heard: { label: "How did you first hear about Yuktiness?", placeholder: "Choose one", otherLabel: "Where did you hear about us?" },
     optional: {
       summary: "Optional: tell us what you're working on",

@@ -38,7 +38,7 @@ function Spinner() {
  */
 export function SignupForm({ idPrefix, title, titleId, autoFocus = false }: { idPrefix: string; title?: string; titleId?: string; autoFocus?: boolean }) {
   const s = useSignup();
-  const { sessions, seats } = useSession();
+  const { next: selected, seats } = useSession();
   const { values } = s;
   const id = (f: FieldName | string) => `${idPrefix}-${f}`;
   const err = (f: FieldName) => s.errorFor(f);
@@ -61,7 +61,6 @@ export function SignupForm({ idPrefix, title, titleId, autoFocus = false }: { id
     );
   }
 
-  const selected = sessions.find((x) => x.slot.id === values.slotId) ?? sessions[0];
   const selectedState = stateOf(seats, selected.slot.id);
   const seatText = { limited: urgency.seatsLimited, closing: urgency.seatsClosingFast, full: urgency.seatsFull }[selectedState].replace(
     "{slot}",
@@ -181,39 +180,14 @@ export function SignupForm({ idPrefix, title, titleId, autoFocus = false }: { id
           <ErrorText id={id("email-error")} message={err("email")} />
         </div>
 
-        {/* 4. Session */}
-        <fieldset aria-describedby={describe("slotId")}>
-          <legend className={labelCls}>{F.session.label}</legend>
-          <div className="grid gap-2.5 sm:grid-cols-2">
-            {sessions.map((x, i) => {
-              const state = stateOf(seats, x.slot.id);
-              const full = state === "full";
-              const note = full ? urgency.slotFullShort : state === "closing" ? "Seats closing fast" : "Limited seats";
-              return (
-                <label key={x.slot.id} className={`relative block ${full ? "cursor-not-allowed" : "cursor-pointer"}`}>
-                  <input
-                    type="radio"
-                    name={`${idPrefix}-session`}
-                    id={i === 0 ? id("slotId") : undefined}
-                    value={x.slot.id}
-                    checked={values.slotId === x.slot.id}
-                    disabled={full}
-                    onChange={() => s.setSlot(x.slot.id)}
-                    className="peer sr-only"
-                  />
-                  <span className="flex min-h-14 flex-col justify-center rounded-2xl border-2 border-line-light bg-white px-4 py-2.5 transition-colors peer-checked:border-teal-deep peer-checked:bg-[#E9F5F3] peer-focus-visible:outline peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-teal-deep peer-disabled:opacity-60">
-                    <span className="font-semibold leading-snug">{formatIST(x.startsAt).replace(" IST", "")}</span>
-                    <span className="mt-0.5 flex items-center gap-1.5 text-xs text-ink-soft">
-                      <span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${full ? "bg-ink-soft" : "bg-amber"}`} />
-                      IST · {note}
-                    </span>
-                  </span>
-                </label>
-              );
-            })}
-          </div>
-          <ErrorText id={id("slotId-error")} message={err("slotId")} />
-        </fieldset>
+        {/* 4. Session: picked automatically (the next one with seats) */}
+        <div>
+          <p className={labelCls}>{F.session.label}</p>
+          <p className="flex min-h-14 flex-col justify-center rounded-2xl border-2 border-teal-deep bg-[#E9F5F3] px-4 py-2.5" aria-live="polite">
+            <span className="font-semibold leading-snug">{formatIST(selected.startsAt)}</span>
+            <span className="mt-0.5 text-xs text-ink-soft">{F.session.note}</span>
+          </p>
+        </div>
 
         {/* 5. How did you hear */}
         <div>
