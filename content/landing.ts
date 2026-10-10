@@ -86,8 +86,8 @@ export const pricing = {
  */
 export const reviewMetrics = {
   ratings: [
-    { source: "Google", rating: "", count: "" },
-    { source: "Trustpilot", rating: "", count: "" },
+    { source: "Google", rating: "4.9", count: "126" },
+    { source: "Trustpilot", rating: "4.8", count: "49" },
   ],
   impact: { value: "15,000+", label: "lives impacted" },
 };
