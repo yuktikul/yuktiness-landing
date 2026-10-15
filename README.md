@@ -39,10 +39,10 @@ Scripts: `npm run build`, `npm start`, `npm test`, `npm run typecheck`, `npm run
 
 ## How the truthful urgency works
 
-- **Session dates**: `schedule` in `content/landing.ts` (Wednesday 19:00 and 11:00 IST). `src/lib/schedule.ts` computes the next real occurrence of each slot in IST.
+- **Session dates**: `schedule` in `content/landing.ts` (Wednesday 19:00 and Sunday 11:00 IST). `src/lib/schedule.ts` computes the next real occurrence of each slot in IST.
 - **Countdown**: counts down to the real start of the soonest upcoming session, ticking every second on the client from one shared clock. At zero it moves to the next session. It's the same for every visitor and never resets. Shown in the hero, under the video, in the signup card, and in the sticky mobile bar.
 - **Seats**: no numbers are shown. Each session shows one line, and the wording follows the real bookings in the CRM so it stays truthful:
-  - "Limited seats for Wednesday 7 PM": the default, and also what shows if the CRM can't be reached (sessions are genuinely capped).
+  - "Limited spots for Wednesday 7 PM": the default, and also what shows if the CRM can't be reached (sessions are genuinely capped).
   - "Seats closing fast for…": only once 30% or fewer of that session's seats remain (`urgency.closingFastShareLeft`).
   - "This session is full": at 0 seats. That slot is disabled and the other slot is selected by default.
   The browser calls this app's `/api/seats`, which calls the CRM's `GET /api/public/seats` with the API key (cached 30 seconds).

@@ -22,7 +22,7 @@ export type SessionSlot = {
 
 export const schedule: SessionSlot[] = [
   { id: "wed-1900", crmSlotId: "slot_wed_1900", label: "Wednesday 7 PM", dayOfWeek: 3, startTime: "19:00" },
-  { id: "wed-1100", crmSlotId: "slot_wed_1100", label: "Wednesday 11 AM", dayOfWeek: 3, startTime: "11:00" },
+  { id: "sun-1100", crmSlotId: "slot_sun_1100", label: "Sunday 11 AM", dayOfWeek: 0, startTime: "11:00" },
 ];
 
 /** Length of each live masterclass, in minutes. */
@@ -36,7 +36,7 @@ export const site = {
   description:
     "A 2-hour live masterclass on understanding and improving how you breathe. Explore how your breathing connects with stress, sleep and energy, try a guided practice, and leave with a clear next step.",
   ogTitle: "Breath Alignment Masterclass with Yukti Raj Kishore",
-  ogDescription: "2 hours, live, every Wednesday. Understand your breathing pattern, practise with guidance, and leave with a clear next step.",
+  ogDescription: "2 hours, live, every Wednesday and Sunday. Understand your breathing pattern, practise with guidance, and leave with a clear next step.",
   /** Shown in the footer as a tap-to-call link. */
   contactPhone: "+91 80507 10575",
   /** Optional. Leave empty to hide the email link. */
@@ -266,10 +266,10 @@ export const faq = {
       a: "It focuses on assessing your own pattern and choosing practices in a sensible order.",
     },
     { q: "Do I need experience?", a: "No." },
-    { q: "When is it held?", a: "Every Wednesday at 7 PM and 11 AM IST." },
+    { q: "When is it held?", a: "Every Wednesday at 7 PM and every Sunday at 11 AM IST." },
     {
       q: "What if I can't attend live?",
-      a: "There are no recordings. The masterclass is live and runs every Wednesday at 7 PM and 11 AM IST, so you can join the next one.",
+      a: "There are no recordings. The masterclass is live and runs every Wednesday at 7 PM and every Sunday at 11 AM IST, so you can join the next one.",
     },
     {
       q: "Is it safe for everyone?",

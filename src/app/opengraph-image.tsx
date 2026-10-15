@@ -33,7 +33,7 @@ export default async function OpengraphImage() {
         </div>
         <div style={{ fontSize: 64, marginTop: 40, lineHeight: 1.15, maxWidth: 980 }}>Breath Alignment Masterclass</div>
         <div style={{ fontSize: 30, marginTop: 24, color: "#AEB9CA", maxWidth: 900 }}>{hero.eyebrow}</div>
-        <div style={{ display: "flex", marginTop: 48, fontSize: 26, color: "#E8A838" }}>Every Wednesday · 11 AM and 7 PM IST</div>
+        <div style={{ display: "flex", marginTop: 48, fontSize: 26, color: "#E8A838" }}>Wednesdays 7 PM · Sundays 11 AM IST</div>
       </div>
     ),
     size,
